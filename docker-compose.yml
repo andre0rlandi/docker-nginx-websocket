@@ -1,0 +1,29 @@
+version: "3"
+
+services:  
+    frontend:
+        image: ws-frontend
+        container_name: ws-frontend
+        restart: unless-stopped
+        depends_on: 
+            - backend
+        build:
+            context: ./frontend
+            args:
+                - REACT_APP_SERVICES_HOST=/packages
+        ports:
+            - "80:80"
+        networks:
+            - default
+
+    backend:
+        image: ws-backend
+        container_name: ws-backend
+        restart: unless-stopped
+        build:
+            context: ./backend
+        networks: 
+            - default        
+
+networks:
+    default:
